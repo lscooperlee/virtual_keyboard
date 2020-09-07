@@ -37,7 +37,8 @@ int setup_uinput_device() {
 
   struct uinput_setup uinp;
   memset(&uinp, 0, sizeof(uinp)); // Intialize the uInput device to NULL
-  //strncpy(uinp.name, "Virtual Keyboard Device", strlen("Virtual Keyboard Device"));
+  // strncpy(uinp.name, "Virtual Keyboard Device", strlen("Virtual Keyboard
+  // Device"));
   uinp.id.bustype = BUS_USB;
   uinp.id.product = 0x1234;
   uinp.id.vendor = 0x5678;
@@ -68,10 +69,10 @@ void emit(int fd, int type, int code, int val) {
 }
 
 void send_key_event(int fd, unsigned int keycode) {
-    emit(fd, EV_KEY, keycode, 1);
-    emit(fd, EV_SYN, SYN_REPORT, 0);
-    emit(fd, EV_KEY, keycode, 0);
-    emit(fd, EV_SYN, SYN_REPORT, 0);
+  emit(fd, EV_KEY, keycode, 1);
+  emit(fd, EV_SYN, SYN_REPORT, 0);
+  emit(fd, EV_KEY, keycode, 0);
+  emit(fd, EV_SYN, SYN_REPORT, 0);
 }
 
 void destroy_uinput_device(int uinp_fd) {
@@ -95,6 +96,5 @@ void Keyboard::run() {
     auto key = static_cast<unsigned int>(backend->wait());
 
     send_key_event(uinput_fd, key);
-
   }
 }

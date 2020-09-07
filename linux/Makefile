@@ -8,7 +8,7 @@ RM          := rm -f
 DIRNAME     := dirname
 
 
-APP=uinput
+APP=virtual_keyboard
 
 LDFLAGS = 
 CFLAGS = -Wall -I. -DDEBUG -g -O2
