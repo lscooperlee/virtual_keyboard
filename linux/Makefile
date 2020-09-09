@@ -10,8 +10,8 @@ DIRNAME     := dirname
 
 APP=virtual_keyboard
 
-LDFLAGS = 
-CFLAGS = -Wall -I. -DDEBUG -g -O2
+LDFLAGS = -lemi
+CFLAGS = -Wall -Wextra -I. -DDEBUG -g -O2
 
 OUTDIR=./.out
 BINDIR=$(OUTDIR)/bin

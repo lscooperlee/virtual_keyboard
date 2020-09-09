@@ -23,7 +23,7 @@ int serial_setup(const char *serial_device) {
     return -1;
   }
 
-  struct termios tty = {0};
+  struct termios tty = {};
 
   if (tcgetattr(serial_port, &tty) != 0) {
     printf("Error %i from tcgetattr: %s\n", errno, strerror(errno));
