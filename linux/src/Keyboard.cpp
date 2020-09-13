@@ -11,6 +11,7 @@
 #include <string.h>
 #include <sys/time.h>
 #include <unistd.h>
+#include <unordered_map>
 
 namespace {
 
@@ -91,10 +92,19 @@ Keyboard::Keyboard(std::unique_ptr<Backend> backend_)
 
 Keyboard::~Keyboard() { destroy_uinput_device(uinput_fd); }
 
+const std::unordered_map<Keyset, unsigned long> map = {
+    {Keyset::key_0, KEY_0}, {Keyset::key_1, KEY_1}, {Keyset::key_2, KEY_2},
+    {Keyset::key_3, KEY_3}, {Keyset::key_4, KEY_4}, {Keyset::key_5, KEY_5},
+    {Keyset::key_6, KEY_6}, {Keyset::key_7, KEY_7}, {Keyset::key_8, KEY_8},
+    {Keyset::key_9, KEY_9}, {Keyset::key_A, KEY_A}, {Keyset::key_B, KEY_B},
+    {Keyset::key_C, KEY_C}, {Keyset::key_D, KEY_D}, {Keyset::key_E, KEY_E},
+    {Keyset::key_F, KEY_F},
+};
+
 void Keyboard::run() {
   while (1) {
-    auto key = static_cast<unsigned int>(backend->wait());
+    auto key = backend->wait();
 
-    send_key_event(uinput_fd, key);
+    send_key_event(uinput_fd, map.at(key));
   }
 }

@@ -83,25 +83,19 @@ SerialBackend::SerialBackend(std::string name) {
 
 SerialBackend::~SerialBackend() { close(serial_fd); }
 
+const std::unordered_map<char, Keyset> map = {
+    {'0', Keyset::key_0}, {'1', Keyset::key_1}, {'2', Keyset::key_2},
+    {'3', Keyset::key_3}, {'4', Keyset::key_4}, {'5', Keyset::key_5},
+    {'6', Keyset::key_6}, {'7', Keyset::key_7}, {'8', Keyset::key_8},
+    {'9', Keyset::key_9}, {'A', Keyset::key_A}, {'B', Keyset::key_B},
+    {'C', Keyset::key_C}, {'D', Keyset::key_D}, {'*', Keyset::key_E},
+    {'#', Keyset::key_F},
+};
+
 Keyset SerialBackend::wait() {
 
-  const std::unordered_map<char, Keyset> map = {
-      {'0', Keyset::key_0}, {'1', Keyset::key_1}, {'2', Keyset::key_2},
-      {'3', Keyset::key_3}, {'4', Keyset::key_4}, {'5', Keyset::key_5},
-      {'6', Keyset::key_6}, {'7', Keyset::key_7}, {'8', Keyset::key_8},
-      {'9', Keyset::key_9}, {'A', Keyset::key_A}, {'B', Keyset::key_B},
-      {'C', Keyset::key_C}, {'D', Keyset::key_D},
-  };
-
   char key;
-  auto n = read(serial_fd, &key, sizeof(key));
-  if (n < 0) {
-    return Keyset::key_esc;
-  }
+  read(serial_fd, &key, sizeof(key));
 
-  try {
-    return map.at(key);
-  } catch (const std::out_of_range &) {
-    return Keyset::key_esc;
-  }
+  return map.at(key);
 }
