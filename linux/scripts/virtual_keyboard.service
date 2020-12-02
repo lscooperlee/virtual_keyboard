@@ -1,0 +1,9 @@
+[Unit]
+After=multi-user.target
+
+[Service]
+ExecStart=/home/cooper/virtual_keyboard/linux/.out/bin/virtual_keyboard /dev/ttyVK
+
+
+[Install]
+WantedBy=multi-user.target

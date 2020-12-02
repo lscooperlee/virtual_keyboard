@@ -1,0 +1,1 @@
+ACTION=="add", KERNEL=="ttyS0", SYMLINK+="ttyVK"
